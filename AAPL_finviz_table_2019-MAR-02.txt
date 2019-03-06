@@ -1,0 +1,144 @@
+0 Index
+1 DJIA S&P500
+2 P/E
+3 14.66
+4 EPS (ttm)
+5 11.94
+6 Insider Own
+7 0.07%
+8 Shs Outstand
+9 4.74B
+10 Perf Week
+11 1.16%
+12 Market Cap
+13 828.63B
+14 Forward P/E
+15 13.72
+16 EPS next Y
+17 12.75
+18 Insider Trans
+19 -6.27%
+20 Shs Float
+21 4.68B
+22 Perf Month
+23 5.88%
+24 Income
+25 58.33B
+26 PEG
+27 1.13
+28 EPS next Q
+29 2.37
+30 Inst Own
+31 61.30%
+32 Short Float
+33 0.86%
+34 Perf Quarter
+35 0.42%
+36 Sales
+37 261.61B
+38 P/S
+39 3.17
+40 EPS this Y
+41 32.60%
+42 Inst Trans
+43 -0.63%
+44 Short Ratio
+45 1.08
+46 Perf Half Y
+47 -20.36%
+48 Book/sh
+49 24.89
+50 P/B
+51 7.03
+52 EPS next Y
+53 11.73%
+54 ROA
+55 16.30%
+56 Target Price
+57 178.49
+58 Perf Year
+59 -1.77%
+60 Cash/sh
+61 18.25
+62 P/C
+63 9.59
+64 EPS next 5Y
+65 13.00%
+66 ROE
+67 50.90%
+68 52W Range
+69 142.00 - 233.47
+70 Perf YTD
+71 10.92%
+72 Dividend
+73 2.92
+74 P/FCF
+75 17.25
+76 EPS past 5Y
+77 16.50%
+78 ROI
+79 26.60%
+80 52W High
+81 -25.06%
+82 Beta
+83 1.11
+84 Dividend %
+85 1.67%
+86 Quick Ratio
+87 1.30
+88 Sales past 5Y
+89 9.20%
+90 Gross Margin
+91 38.20%
+92 52W Low
+93 23.22%
+94 ATR
+95 2.94
+96 Employees
+97 132000
+98 Current Ratio
+99 1.30
+100 Sales Q/Q
+101 -4.50%
+102 Oper. Margin
+103 26.00%
+104 RSI (14)
+105 63.68
+106 Volatility
+107 1.22% 1.44%
+108 Optionable
+109 Yes
+110 Debt/Eq
+111 0.97
+112 EPS Q/Q
+113 -4.80%
+114 Profit Margin
+115 22.70%
+116 Rel Volume
+117 0.69
+118 Prev Close
+119 173.15
+120 Shortable
+121 Yes
+122 LT Debt/Eq
+123 0.79
+124 Earnings
+125 Jan 29 AMC
+126 Payout
+127 23.00%
+128 Avg Volume
+129 37.39M
+130 Price
+131 174.97
+132 Recom
+133 2.20
+134 SMA20
+135 2.05%
+136 SMA50
+137 8.37%
+138 SMA200
+139 -8.49%
+140 Volume
+141 25,720,279
+142 Change
+143 1.05%
