@@ -2,6 +2,8 @@ from urllib.request import urlopen
 from bs4 import BeautifulSoup
 import matplotlib as plt
 import numpy as np
+from urllib.error import HTTPError
+from urllib.error import URLError
 import pandas as pd
 import re
 import datetime
@@ -9,19 +11,43 @@ import datetime
 class stock:
     def __init__(self, symbol):
         self.symbol = symbol # stock symbol as a string
-        self.quote = self.finvizTableTags()
+        try:
+            html = urlopen(self.finvizUrl())
+        except HTTPError as e:
+            print(e)
+            print('WARNING! ' + self.symbol + ' is not available at finviz.com')
+            self.quote = []
+            for i in range(144):
+                self.quote.append('0.000000')
+        except URLError as e:
+            print(e)
+            print('The finviz.com server could not be found')
+            self.quote = []
+            for i in range(144):
+                self.quote.append('0.000000')
+        else:
+            self.quote = self.finvizTableTags()
 
     def getName(self):
         # input: self
         # output: the name of the company as a string
-        html = urlopen(self.finvizUrl())
-        bs = BeautifulSoup(html,'html.parser')
-        nameWords = bs.find('title').text.split()
-        name = ''
-        for i in range(1,len(nameWords)-2):
-            name = name + nameWords[i] + ' '
-        return name
-        #return bs.find('title').text.split[:-12]
+        try:
+            html = urlopen(self.finvizUrl())
+        except HTTPError as e:
+            print(e)
+            print('WARNING! ' + self.symbol + ' is not available at finviz.com')
+            return ''
+        except URLError as e:
+            print(e)
+            print('The finviz.com server could not be found')
+            return ''
+        else:
+            bs = BeautifulSoup(html,'html.parser')
+            nameWords = bs.find('title').text.split()
+            name = ''
+            for i in range(1,len(nameWords)-2):
+                name = name + nameWords[i] + ' '
+            return name
 
     def getPrice(self):
         # input: self
@@ -31,9 +57,17 @@ class stock:
     def finvizTable(self):
         # input: self
         # output: the stock's quote table from finviz.com as a BeautifulSoup object
-        html = urlopen(self.finvizUrl())
-        bs = BeautifulSoup(html, 'html.parser')
-        return bs.find('table',{'class':'snapshot-table2'}).find_all('td')
+        try:
+            html = urlopen(self.finvizUrl())
+        except HTTPError as e:
+            print(e)
+            print('WARNING! ' + self.symbol + ' is not available at finviz.com')
+        except URLError as e:
+            print(e)
+            print('The finviz.com server could not be found')
+        else:
+            bs = BeautifulSoup(html, 'html.parser')
+            return bs.find('table',{'class':'snapshot-table2'}).find_all('td')
 
     def finvizUrl(self):
         # input: self
@@ -133,6 +167,21 @@ class stock:
             print(entry)
         return 0
 
+    def priceVsTargetPrice(self):
+        # input: self
+        # output: price-to-target-price ratio as a float
+        return self.getPrice()/self.getTargetPrice()
+
+    def priceVs52WeekLow(self):
+        # input: self
+        # output: price-to-52-week-low ratio as a float
+        return self.getPrice()/self.get52WeekLow()
+
+    def priceVs52WeekHigh(self):
+        # input: self
+        # output: price-to-52-week-high ratio as a float
+        return self.getPrice()/self.get52WeekHigh()
+
     def finvizTableTags(self):
         # input: self
         # output: the stock's quote table from finviz.com as a BeautifulSoup object
@@ -148,6 +197,8 @@ class stockList:
     def __init__(self, filename):
         self.filename = filename
         # the filename of the file with the list of stock symbols as a string with stocks separated by commas
+        self.stocksList = self.getStockList()
+        self.stocksListQuote = self.stockListQuote()
 
     def getStockList(self):
         # input: self
@@ -155,6 +206,16 @@ class stockList:
         file = self.filename
         f = open(file, "r").read().split(',')
         return f
+
+    def stockListQuote(self):
+        # input: self
+        # output: array of stocks
+        quoteList = []
+        for security in self.stocksList:
+            quoteList.append(stock(security))
+        return quoteList
+
+
 
 
 
@@ -166,8 +227,13 @@ att = stock('T')
 cci = stock('CCI')
 mmm = stock('MMM')"""
 
-myList = stockList('Stock_Watchlist.txt').getStockList()
-print(myList)
+xxxx = stock('XXXX')
+print(xxxx.getDividendYield())
+
+"""myList = stockList('Stock_Watchlist.txt')
+print(myList.stocksList)
+print(len(myList.stocksList))
+myList.stocksList.stockListQuote()"""
 
 #print(aapl.getYTDGrowth())
 #print(aapl.getName())
