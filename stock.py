@@ -221,32 +221,34 @@ class stockList:
 
 
 #***********************************************************************************************************************
+# create stocks test
 """aapl = stock('AAPL')
 googl = stock('GOOGL')
 att = stock('T')
 cci = stock('CCI')
-mmm = stock('MMM')"""
+mmm = stock('MMM')
 
-xxxx = stock('XXXX')
-print(xxxx.getDividendYield())
-
-"""myList = stockList('Stock_Watchlist.txt')
-print(myList.stocksList)
-print(len(myList.stocksList))
-myList.stocksList.stockListQuote()"""
-
-#print(aapl.getYTDGrowth())
-#print(aapl.getName())
-#print(aapl.getDividendYield())
-#print(aapl.getDividendPayoutRatio())
-#print(aapl.get52WeekHigh())
-"""tableInfo = cci.finvizTableTags()
+print(aapl.getYTDGrowth())
+print(aapl.getName())
+print(aapl.getDividendYield())
+print(aapl.getDividendPayoutRatio())
+print(aapl.get52WeekHigh())
+tableInfo = cci.finvizTableTags()
 for n, i in enumerate(tableInfo):
-    print(n, i)"""
+    print(n, i)
 
-"""
 print(aapl.getName() + ', ' + aapl.symbol + ': $' + str(aapl.getPrice()))
 print(googl.getName() + ', ' + googl.symbol + ': $' + str(googl.getPrice()))
 print(att.getName() + ', ' + att.symbol + ': $' + str(att.getPrice()))
 print(cci.getName() + ', ' + cci.symbol + ': $' + str(cci.getPrice()))
 print(mmm.getName() + ', ' + mmm.symbol + ': $' + str(mmm.getPrice()))"""
+
+# error handling check
+xxxx = stock('XXXX')
+print(xxxx.getDividendYield())
+
+# create stock list
+"""myList = stockList('Stock_Watchlist.txt')
+print(myList.stocksList)
+print(len(myList.stocksList))
+myList.stocksList.stockListQuote()"""
