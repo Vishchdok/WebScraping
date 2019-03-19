@@ -4,6 +4,8 @@ import matplotlib as plt
 import numpy as np
 from urllib.error import HTTPError
 from urllib.error import URLError
+from fastnumbers import isfloat
+from fastnumbers import fast_float
 import pandas as pd
 import re
 import datetime
@@ -11,43 +13,29 @@ import datetime
 class stock:
     def __init__(self, symbol):
         self.symbol = symbol # stock symbol as a string
-        try:
-            html = urlopen(self.finvizUrl())
-        except HTTPError as e:
-            print(e)
-            print('WARNING! ' + self.symbol + ' is not available at finviz.com')
-            self.quote = []
-            for i in range(144):
-                self.quote.append('0.000000')
-        except URLError as e:
-            print(e)
-            print('The finviz.com server could not be found')
-            self.quote = []
-            for i in range(144):
-                self.quote.append('0.000000')
-        else:
+        if self.finvizURLExist()[0]:
             self.quote = self.finvizTableTags()
+        else:
+            print(self.finvizURLExist()[1])
+            print('Above error occured for symbol: ' + self.symbol)
+            self.quote = []
+            for i in range(144):
+                self.quote.append('0.000000')
 
     def getName(self):
         # input: self
         # output: the name of the company as a string
-        try:
+        if self.finvizURLExist()[0]:
             html = urlopen(self.finvizUrl())
-        except HTTPError as e:
-            print(e)
-            print('WARNING! ' + self.symbol + ' is not available at finviz.com')
-            return ''
-        except URLError as e:
-            print(e)
-            print('The finviz.com server could not be found')
-            return ''
-        else:
-            bs = BeautifulSoup(html,'html.parser')
+            bs = BeautifulSoup(html, 'html.parser')
             nameWords = bs.find('title').text.split()
             name = ''
-            for i in range(1,len(nameWords)-2):
+            for i in range(1, len(nameWords) - 2):
                 name = name + nameWords[i] + ' '
             return name
+        else:
+            return self.symbol + '(ERROR)'
+
 
     def getPrice(self):
         # input: self
@@ -57,7 +45,7 @@ class stock:
     def finvizTable(self):
         # input: self
         # output: the stock's quote table from finviz.com as a BeautifulSoup object
-        try:
+        """try:
             html = urlopen(self.finvizUrl())
         except HTTPError as e:
             print(e)
@@ -67,7 +55,7 @@ class stock:
             print('The finviz.com server could not be found')
         else:
             bs = BeautifulSoup(html, 'html.parser')
-            return bs.find('table',{'class':'snapshot-table2'}).find_all('td')
+            return bs.find('table',{'class':'snapshot-table2'}).find_all('td')"""
 
     def finvizUrl(self):
         # input: self
@@ -120,13 +108,14 @@ class stock:
         return float(self.quote[111])
 
     def getPriceToBook(self):
-        # input:
+        # input: self
         # output: the stock's Price-to-Book ratio as a float
         return float(self.quote[51])
 
     def plotPriceHistory(self, numberYears):
-        # input: self
+        # input: self, number of years as int
         # output: plot of stock price history going back numberYears (in years)
+
         return 0
 
     def getYTDGrowth(self):
@@ -193,6 +182,19 @@ class stock:
             tdText.append(tag.text)
         return tdText
 
+    def finvizURLExist(self):
+        # input: self
+        # output: True if no errors arise when checking finviz for a stock symbol, else return False
+        try:
+            html = urlopen(self.finvizUrl())
+        except HTTPError as e:
+            return (False, e)
+        except URLError as e:
+            return (False, e)
+        else:
+            return (True, '')
+
+
 class stockList:
     def __init__(self, filename):
         self.filename = filename
@@ -222,30 +224,30 @@ class stockList:
 
 #***********************************************************************************************************************
 # create stocks test
-"""aapl = stock('AAPL')
+aapl = stock('AAPL')
 googl = stock('GOOGL')
 att = stock('T')
 cci = stock('CCI')
 mmm = stock('MMM')
 
-print(aapl.getYTDGrowth())
+"""print(aapl.getYTDGrowth())
 print(aapl.getName())
 print(aapl.getDividendYield())
 print(aapl.getDividendPayoutRatio())
 print(aapl.get52WeekHigh())
 tableInfo = cci.finvizTableTags()
 for n, i in enumerate(tableInfo):
-    print(n, i)
+    print(n, i)"""
 
 print(aapl.getName() + ', ' + aapl.symbol + ': $' + str(aapl.getPrice()))
 print(googl.getName() + ', ' + googl.symbol + ': $' + str(googl.getPrice()))
 print(att.getName() + ', ' + att.symbol + ': $' + str(att.getPrice()))
 print(cci.getName() + ', ' + cci.symbol + ': $' + str(cci.getPrice()))
-print(mmm.getName() + ', ' + mmm.symbol + ': $' + str(mmm.getPrice()))"""
+print(mmm.getName() + ', ' + mmm.symbol + ': $' + str(mmm.getPrice()))
 
 # error handling check
 xxxx = stock('XXXX')
-print(xxxx.getDividendYield())
+print(xxxx.getName() + ', ' + xxxx.symbol + ' dividend : $' + str(xxxx.getDividendYield()))
 
 # create stock list
 """myList = stockList('Stock_Watchlist.txt')
