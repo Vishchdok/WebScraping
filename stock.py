@@ -17,7 +17,7 @@ class stock:
             self.quote = self.finvizTableTags()
         else:
             print(self.finvizURLExist()[1])
-            print('Above error occured for symbol: ' + self.symbol)
+            print('Above error occurred for symbol: ' + self.symbol)
             self.quote = []
             for i in range(144):
                 self.quote.append('0.000000')
@@ -45,17 +45,13 @@ class stock:
     def finvizTable(self):
         # input: self
         # output: the stock's quote table from finviz.com as a BeautifulSoup object
-        """try:
+        if self.finvizURLExist()[0]:
             html = urlopen(self.finvizUrl())
-        except HTTPError as e:
-            print(e)
-            print('WARNING! ' + self.symbol + ' is not available at finviz.com')
-        except URLError as e:
-            print(e)
-            print('The finviz.com server could not be found')
-        else:
             bs = BeautifulSoup(html, 'html.parser')
-            return bs.find('table',{'class':'snapshot-table2'}).find_all('td')"""
+            return bs.find('table', {'class':'snapshot-table2'}).fina_all('td')
+        else:
+            print(self.finvizURLExist()[1])
+            print('Above error occurred for symbol: ' + self.symbol)
 
     def finvizUrl(self):
         # input: self
